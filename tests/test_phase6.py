@@ -99,3 +99,9 @@ class TestSanitizingFilter:
         record = self._make_record("Sender: %s", args=("bob@example.com",))
         filt.filter(record)
         assert "bob@example.com" not in str(record.args)
+
+    def test_non_string_args_preserved(self):
+        filt = SanitizingFilter()
+        record = self._make_record("reconnecting in %.1f s", args=(5.0,))
+        filt.filter(record)
+        assert record.args == (5.0,)

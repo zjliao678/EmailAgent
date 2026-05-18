@@ -15,9 +15,15 @@ class SanitizingFilter(logging.Filter):
     def filter(self, record: logging.LogRecord) -> bool:
         record.msg = self._sanitize(str(record.msg))
         if isinstance(record.args, dict):
-            record.args = {k: self._sanitize(str(v)) for k, v in record.args.items()}
+            record.args = {
+                k: self._sanitize(v) if isinstance(v, str) else v
+                for k, v in record.args.items()
+            }
         elif record.args:
-            record.args = tuple(self._sanitize(str(a)) for a in record.args)
+            record.args = tuple(
+                self._sanitize(a) if isinstance(a, str) else a
+                for a in record.args
+            )
         return True
 
     @staticmethod
