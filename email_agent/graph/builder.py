@@ -53,11 +53,14 @@ def _confirm_node(state: GraphState) -> GraphState:
 # ── Graph assembly ────────────────────────────────────────────────────────────
 
 
-def build_graph():
+def build_graph(llm=None):
     g = StateGraph(GraphState)
 
+    def _classify(state):
+        return classify_node(state, llm=llm)
+
     g.add_node("injection_check", injection_check_node)
-    g.add_node("classify", classify_node)
+    g.add_node("classify", _classify)
     g.add_node("validate", validate_node)
     g.add_node("split", split_node)
     g.add_node("risk", risk_node)
