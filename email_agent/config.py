@@ -30,7 +30,7 @@ class Settings(BaseSettings):
 
     # LLM — DeepSeek (OpenAI-compatible API)
     deepseek_api_key: str = ""
-    llm_base_url: str = "https://api.deepseek.com"
+    llm_base_url: str = "https://api.deepseek.com/v1"
     llm_model: str = "deepseek-v4-flash"
     llm_temperature: float = 0.0
 

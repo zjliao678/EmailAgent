@@ -59,11 +59,15 @@ def _default_llm() -> Callable[[GraphState], ClassifyResult]:
         temperature=cfg.llm_temperature,
         base_url=cfg.llm_base_url,
         api_key=cfg.deepseek_api_key,
-    ).with_structured_output(ClassifyResult)
+        timeout=30,
+        max_retries=0,
+    ).with_structured_output(ClassifyResult, method="json_mode")
     prompt = ChatPromptTemplate.from_messages([
         ("system", (
             "You are an email intent classifier. "
-            "Return a JSON object with 'intents' (list) and 'reason' (string). "
+            "Respond ONLY with a JSON object (no markdown) with two keys: "
+            "'intents' (array of objects each with 'name' and 'confidence' 0-1) "
+            "and 'reason' (string). "
             f"Valid intent names: {sorted(VALID_INTENT_NAMES)}"
         )),
         ("human", "Email subject: {subject}\n\nBody:\n{body}"),
