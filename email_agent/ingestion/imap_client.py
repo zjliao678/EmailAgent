@@ -137,6 +137,15 @@ class IMAPClient:
             try:
                 if not self._connected:
                     await self.connect()
+                    # Drain any unseen emails that arrived before this session started
+                    existing = await self._protocol.search_unseen()
+                    logger.info("IMAP connected — %d unseen email(s) found on startup", len(existing))
+                    for uid in existing:
+                        try:
+                            await callback(uid)
+                        except Exception as exc:
+                            logger.error("Callback error for UID %s: %s", uid, exc)
+                logger.debug("Entering IMAP IDLE...")
                 await self._idle_cycle(callback)
             except Exception as exc:
                 logger.warning(

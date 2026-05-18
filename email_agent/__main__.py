@@ -6,6 +6,7 @@ Usage:
 
 import asyncio
 import logging
+import os
 import sys
 
 from sqlalchemy import create_engine
@@ -24,10 +25,11 @@ from email_agent.models.base import Base
 
 # ── Logging setup ─────────────────────────────────────────────────────────────
 
+_log_level = os.environ.get("LOG_LEVEL", "INFO").upper()
 _handler = logging.StreamHandler(sys.stdout)
 _handler.addFilter(SanitizingFilter())
 logging.basicConfig(
-    level=logging.INFO,
+    level=getattr(logging, _log_level, logging.INFO),
     format="%(asctime)s %(levelname)-8s %(name)s — %(message)s",
     handlers=[_handler],
 )
