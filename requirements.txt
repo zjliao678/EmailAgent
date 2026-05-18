@@ -1,0 +1,36 @@
+# ── Phase 1: Email ingestion ──────────────────────────────────────────────────
+aioimaplib>=1.0.1
+aiosmtplib>=3.0.1
+beautifulsoup4>=4.12
+lxml>=5.0
+pdfplumber>=0.11
+python-docx>=1.1
+pytesseract>=0.3
+pyclamd>=0.4
+
+# ── Config & Data models ──────────────────────────────────────────────────────
+pydantic>=2.7
+pydantic-settings>=2.3
+
+# ── Database ──────────────────────────────────────────────────────────────────
+sqlalchemy>=2.0
+psycopg2-binary>=2.9
+
+# ── Task queue ────────────────────────────────────────────────────────────────
+celery>=5.4
+redis>=5.0
+
+# ── Phase 2+: Agent core (added when needed) ──────────────────────────────────
+langgraph>=0.2
+langchain-openai>=0.1
+chromadb>=0.5
+
+# ── Phase 6: Observability ────────────────────────────────────────────────────
+langsmith>=0.1
+prometheus-client>=0.20
+
+# ── Dev / Test ────────────────────────────────────────────────────────────────
+pytest>=8.2
+pytest-asyncio>=0.23
+pytest-mock>=3.14
+aiosqlite>=0.20
