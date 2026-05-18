@@ -28,6 +28,12 @@ class Settings(BaseSettings):
     # Task queue
     redis_url: str = "redis://localhost:6379/0"
 
+    # LLM — DeepSeek (OpenAI-compatible API)
+    deepseek_api_key: str = ""
+    llm_base_url: str = "https://api.deepseek.com"
+    llm_model: str = "deepseek-v4-flash"
+    llm_temperature: float = 0.0
+
     # Security
     attachment_max_bytes: int = 10 * 1024 * 1024  # 10 MB
 

@@ -1,4 +1,4 @@
-"""Intent classification node — calls LLM (GPT-4o-mini) with retry."""
+"""Intent classification node — calls LLM (DeepSeek, OpenAI-compatible) with retry."""
 
 import logging
 from typing import Any, Callable, Optional
@@ -51,8 +51,15 @@ def _default_llm() -> Callable[[GraphState], ClassifyResult]:
     """Build the real LLM callable (deferred import so tests never load langchain)."""
     from langchain_openai import ChatOpenAI
     from langchain_core.prompts import ChatPromptTemplate
+    from email_agent.config import get_settings
 
-    llm = ChatOpenAI(model="gpt-4o-mini", temperature=0).with_structured_output(ClassifyResult)
+    cfg = get_settings()
+    llm = ChatOpenAI(
+        model=cfg.llm_model,
+        temperature=cfg.llm_temperature,
+        base_url=cfg.llm_base_url,
+        api_key=cfg.deepseek_api_key,
+    ).with_structured_output(ClassifyResult)
     prompt = ChatPromptTemplate.from_messages([
         ("system", (
             "You are an email intent classifier. "

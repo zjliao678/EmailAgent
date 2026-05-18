@@ -22,7 +22,7 @@ redis>=5.0
 
 # ── Phase 2+: Agent core (added when needed) ──────────────────────────────────
 langgraph>=0.2
-langchain-openai>=0.1
+langchain-openai>=0.2
 chromadb>=0.5
 
 # ── Phase 6: Observability ────────────────────────────────────────────────────
